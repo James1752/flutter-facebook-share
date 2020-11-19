@@ -27,7 +27,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: app.meedu.flutter_facebook_auth
+        package: co.yodelit.facebook_share
         pluginClass: FlutterFacebookAuthPlugin
       ios:
         pluginClass: FlutterFacebookAuthPlugin

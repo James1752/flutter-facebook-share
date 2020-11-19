@@ -1,4 +1,4 @@
-package app.meedu.flutter_facebook_auth;
+package co.yodelit.facebook_share;
 
 import android.app.Activity;
 import android.os.Bundle;

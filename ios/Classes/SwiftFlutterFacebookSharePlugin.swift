@@ -5,16 +5,16 @@ import FBSDKCoreKit
 
 
 public class SwiftFlutterFacebookAuthPlugin: NSObject, FlutterPlugin {
-    let facebookAuth = FacebookAuth()
+    let facebookShare = FaceBookShare()
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "app.meedu/flutter_facebook_auth", binaryMessenger: registrar.messenger())
-        let instance = SwiftFlutterFacebookAuthPlugin()
+        let channel = FlutterMethodChannel(name: "co.yodelit.yodel/fb", binaryMessenger: registrar.messenger())
+        let instance = SwiftFlutterFacebookSharePlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         registrar.addApplicationDelegate(instance)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        self.facebookAuth.handle(call, result: result)
+        self.facebookShare.handle(call, result: result)
     }
 
     
