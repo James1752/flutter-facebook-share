@@ -29,7 +29,7 @@ class FacebookShare: NSObject {
                     result(["error": true, "message": "Parameters are invalid"])
                     return
                 }
-                let content = try getLinkSharingContent(url: url??"", quote: quote??"", hashTag: "")
+                let content = try getLinkSharingContent(url: url ?? "", quote: quote ?? "", hashTag: "")
                 let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
 
                 guard shareDialog.canShow else {
