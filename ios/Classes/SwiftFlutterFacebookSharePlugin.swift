@@ -2,6 +2,7 @@ import Flutter
 import UIKit
 
 import FBSDKCoreKit
+import FBSDKShareKit
 
 
 public class SwiftFlutterFacebookSharePlugin: NSObject, FlutterPlugin {
