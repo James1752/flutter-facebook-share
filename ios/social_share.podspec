@@ -3,7 +3,7 @@
 # Run `pod lib lint flutter_facebook_auth.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutter_facebook_auth'
+  s.name             = 'social_share'
   s.version          = '1.0.0'
   s.summary          = 'Plugin to Facebook authentication for iOS in your Flutter app'
   s.description      = <<-DESC
