@@ -12,15 +12,10 @@ import FBSDKShareKit
 import UIKit
 
 class FacebookShare: NSObject {
-    private var viewController: UIViewController
-    
-    init(viewController: UIViewController) {
-        self.viewController = viewController
-    }
     /*
      handle the platform channel
      */
-    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult, viewController: UIViewController) {
         // let args = call.arguments as? [String: Any]
         switch call.method{
         

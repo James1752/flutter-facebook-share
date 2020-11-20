@@ -5,17 +5,17 @@ import FBSDKCoreKit
 
 
 public class SwiftFlutterFacebookSharePlugin: NSObject, FlutterPlugin {
-    var facebookShare = nil
+    let facebookShare = FacebookShare()
+    var controller: UIViewController! 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "co.yodelit.yodel/fb", binaryMessenger: registrar.messenger())
         let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!;
         let instance = SwiftFlutterFacebookSharePlugin()
-        facebookShare = FacebookShare(viewController: viewController)
         registrar.addMethodCallDelegate(instance, channel: channel)
         registrar.addApplicationDelegate(instance)
     }
     
-    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult, viewController: self.controller) {
         self.facebookShare.handle(call, result: result)
     }
 
