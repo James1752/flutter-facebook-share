@@ -22,9 +22,14 @@ class FacebookShare: NSObject {
             result(installed)
 
         case "shareFaceBookLink":
-
             do {
-                let content = try getLinkSharingContent(url: "htps://www.google.com.au", imageUrl: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png", quote: "Hello World!",hashTag: "")
+                let url = myargs?["url"] as? String
+                let quote = myargs?["quote"] as? String
+                if !(url ?? "").isEmpty || !(quote ?? "").isEmpty{
+                    result(["error": true, "message": "Parameters are invalid"])
+                    return
+                }
+                let content = try getLinkSharingContent(url: url, quote: quote,hashTag: "")
                 let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
 
                 guard shareDialog.canShow else {
@@ -91,17 +96,13 @@ class FacebookShare: NSObject {
         }
     }
 
-    private func getLinkSharingContent(url:String, imageURL:String, quote:String, hashTag:String ) throws -> SharingContent {
+    private func getLinkSharingContent(url:String, quote:String, hashTag:String ) throws -> SharingContent {
         do {
             if !verifyUrl(urlString: url){
                 throw FacebookShareError.invalidUrl(message: "Invalid Url")    
             }
-            if !verifyUrl(urlString: imageURL){
-                throw FacebookShareError.invalidUrl(message: "Invalid Url")    
-            }
             let shareLinkContent = ShareLinkContent()
             shareLinkContent.contentURL = URL(string: url)!
-            shareLinkContent.imageURL = URL(string: imageURL)!
             shareLinkContent.quote = quote
             if  !hashTag.isEmpty {
                 shareLinkContent.hashtag = Hashtag(hashTag)

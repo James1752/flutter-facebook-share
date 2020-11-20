@@ -16,15 +16,19 @@ class FacebookShare {
     return false;
   }
 
-  Future<FacebookShareResult> get shareFaceBookLink async {
-    final result = await _channel.invokeMethod("shareFaceBookLink");
+  Future<FacebookShareResult> shareFaceBookLink(
+      String url, String quote) async {
+    var data = Map<String, dynamic>();
+    data.putIfAbsent("url", () => url);
+    data.putIfAbsent("url", () => quote);
+    final result = await _channel.invokeMethod("shareFaceBookLink", data);
     if (result != null) {
       return FacebookShareResult(result["error"], result["message"]);
     }
     return FacebookShareResult(true, "Unknown error occured");
   }
 
-  Future<FacebookShareResult> get shareFaceBookImage async {
+  Future<FacebookShareResult> shareFaceBookImage() async {
     final result = await _channel.invokeMethod("shareFaceBookImage");
     if (result != null) {
       return FacebookShareResult(result["error"], result["message"]);
