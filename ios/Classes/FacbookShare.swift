@@ -28,14 +28,25 @@ class FacebookShare: NSObject {
             result(installed)
 
         case "shareFaceBookLink":
-                let content = getLinkSharingContent(url: "htps://www.google.com.au", quote: "Hello World!",hashTag: "")
+
+            do {
+                let content = try getLinkSharingContent(url: "htps://www.google.com.au", quote: "Hello World!",hashTag: "")
                 let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
 
                 guard shareDialog.canShow else {
-                    print("Facebook Messenger must be installed in order to share to it")
+                    result(["error": true, "message": "Facebook Messenger must be installed in order to share to it"])
                     return
                 }
                 shareDialog.show()
+            }            
+            catch FacebookShareError.invalidUrl(let message) {
+                result(["error": true, "message": message])
+                return
+            }
+            catch {
+                result(["error": true, "message": "Unexpected error has occured"])
+                return  
+            }
             
         case "shareFaceBookImage":
             do {
@@ -43,19 +54,17 @@ class FacebookShare: NSObject {
                 let shareDialog = ShareDialog(fromViewController: controller, content: content as! SharingContent, delegate: nil)
 
                 guard shareDialog.canShow else {
-                    print("Facebook Messenger must be installed in order to share to it")
+                    result(["error": true, "message": "Facebook Messenger must be installed in order to share to it"])
                     return
                 }
                 shareDialog.show()
             }
             catch FacebookShareError.invalidUrl(let message) {
-                print("HERRE222222")
                 result(["error": true, "message": message])
                 return
             }
             catch {
-                print("HERRE555555")
-                result(["error": true, "message": "AHHHHHHH"])
+                result(["error": true, "message": "Unexpected error has occured"])
                 return  
             }
 
@@ -69,7 +78,6 @@ class FacebookShare: NSObject {
             let url = URL(string: imageUrl)!
             let data = try? Data(contentsOf: url)
             if data == nil {
-                print("HERER")
                 throw FacebookShareError.invalidUrl(message: "Invalid Url")
             }
             let image = UIImage(data: data!)!
@@ -82,21 +90,36 @@ class FacebookShare: NSObject {
             }
         return photoContent
         } catch {
-            print("HERRE555555")
             throw FacebookShareError.invalidUrl(message: "Invalid Url")
         }
     }
 
-    private func getLinkSharingContent(url:String, quote:String, hashTag:String ) -> SharingContent {
-        let shareLinkContent = ShareLinkContent()
-        shareLinkContent.contentURL = URL(string: url)!
-        shareLinkContent.quote = quote
-        if  !hashTag.isEmpty {
-            shareLinkContent.hashtag = Hashtag(hashTag)
+    private func getLinkSharingContent(url:String, quote:String, hashTag:String ) -> throws SharingContent {
+        do {
+            if !verifyUrl(url){
+                throw FacebookShareError.invalidUrl(message: "Invalid Url")    
+            }
+            let shareLinkContent = ShareLinkContent()
+            shareLinkContent.contentURL = URL(string: url)!
+            shareLinkContent.quote = quote
+            if  !hashTag.isEmpty {
+                shareLinkContent.hashtag = Hashtag(hashTag)
+            }
+            return shareLinkContent
+        }catch {
+            throw FacebookShareError.invalidUrl(message: "Invalid Url")
         }
-        return shareLinkContent
     }
     
+    private func verifyUrl (urlString: String?) -> Bool {
+        if let urlString = urlString {
+            if let url = NSURL(string: urlString) {
+                return UIApplication.shared.canOpenURL(url as URL)
+            }
+        }
+        return false
+    }
+
     func checkIfFacebookAppInstalled() -> Bool {
         let facebookAppUrl = URL(string: "fb://")!
         return UIApplication.shared.canOpenURL(facebookAppUrl)
