@@ -4,8 +4,8 @@ import UIKit
 import FBSDKCoreKit
 
 
-public class SwiftFlutterFacebookAuthPlugin: NSObject, FlutterPlugin {
-    let facebookShare = FaceBookShare()
+public class SwiftFlutterFacebookSharePlugin: NSObject, FlutterPlugin {
+    let facebookShare = FacebookShare()
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "co.yodelit.yodel/fb", binaryMessenger: registrar.messenger())
         let instance = SwiftFlutterFacebookSharePlugin()

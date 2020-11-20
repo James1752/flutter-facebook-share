@@ -14,7 +14,7 @@ class FacebookShare: NSObject {
      handle the platform channel
      */
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        let args = call.arguments as? [String: Any]
+        // let args = call.arguments as? [String: Any]
         switch call.method{
         
         case "isFacebookInstalled":
