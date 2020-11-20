@@ -56,7 +56,7 @@ class FacebookShare: NSObject {
 
         let photoContent = SharePhotoContent()
         photoContent.photos = [photo]
-        if hashTag {
+        if hashTag != nil {
             photoContent.hashtag = Hashtag(hashTag)
         }
         return photoContent
@@ -66,7 +66,7 @@ class FacebookShare: NSObject {
         let shareLinkContent = ShareLinkContent()
         shareLinkContent.contentURL = URL(string: url)!
         shareLinkContent.quote = quote
-        if hashTag {
+        if hashTag != nil {
             shareLinkContent.hashtag = Hashtag(hashTag)
         }
         return shareLinkContent
