@@ -9,7 +9,8 @@ public class SwiftFlutterFacebookSharePlugin: NSObject, FlutterPlugin {
     var controller: UIViewController! 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "co.yodelit.yodel/fb", binaryMessenger: registrar.messenger())
-        self.controller = (UIApplication.shared.delegate?.window??.rootViewController)!;
+        let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!;
+        self.controller = viewController
         let instance = SwiftFlutterFacebookSharePlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         registrar.addApplicationDelegate(instance)
