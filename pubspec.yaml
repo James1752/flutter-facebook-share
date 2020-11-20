@@ -28,7 +28,7 @@ flutter:
     platforms:
       android:
         package: co.yodelit.facebook_share
-        pluginClass: FlutterFacebookSharePlugin
+        pluginClass: FlutterFacebookAuthPlugin
       ios:
         pluginClass: FlutterFacebookSharePlugin
 
