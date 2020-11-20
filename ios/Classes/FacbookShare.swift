@@ -9,8 +9,14 @@ import Flutter
 import FBSDKCoreKit
 import Foundation
 import FBSDKShareKit
+import UIKit
 
 class FacebookShare: NSObject {
+    private var viewController: UIViewController
+    
+    init(viewController: UIViewController) {
+        self.viewController = viewController
+    }
     /*
      handle the platform channel
      */
@@ -24,7 +30,7 @@ class FacebookShare: NSObject {
 
         case "shareFaceBook":
             let content = getLinkSharingContent(url: "https://www.google.com.au", quote: "Hello World!")
-            let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
+            let shareDialog = ShareDialog(fromViewController: viewController, content: content, delegate: nil)
 
             guard shareDialog.canShow else {
                 print("Facebook Messenger must be installed in order to share to it")
