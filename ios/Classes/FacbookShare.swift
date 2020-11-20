@@ -23,8 +23,8 @@ class FacebookShare: NSObject {
 
         case "shareFaceBookLink":
             do {
-                let url = myargs?["url"] as? String
-                let quote = myargs?["quote"] as? String
+                let url = args?["url"] as? String
+                let quote = args?["quote"] as? String
                 if !(url ?? "").isEmpty || !(quote ?? "").isEmpty{
                     result(["error": true, "message": "Parameters are invalid"])
                     return
