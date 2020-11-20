@@ -94,9 +94,9 @@ class FacebookShare: NSObject {
         }
     }
 
-    private func getLinkSharingContent(url:String, quote:String, hashTag:String ) -> throws SharingContent {
+    private func getLinkSharingContent(url:String, quote:String, hashTag:String ) throws -> SharingContent {
         do {
-            if !verifyUrl(url){
+            if !verifyUrl(urlString: url){
                 throw FacebookShareError.invalidUrl(message: "Invalid Url")    
             }
             let shareLinkContent = ShareLinkContent()
