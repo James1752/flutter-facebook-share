@@ -10,6 +10,6 @@
 
 @implementation FlutterFacebookAuthPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftFlutterFacebookAuthPlugin registerWithRegistrar:registrar];
+  [SwiftFlutterFacebookSharePlugin registerWithRegistrar:registrar];
 }
 @end
