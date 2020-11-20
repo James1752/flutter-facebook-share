@@ -15,4 +15,8 @@ class FacebookShare {
     }
     return false;
   }
+
+  Future<void> get shareFaceBook async {
+    await _channel.invokeMethod("shareFaceBook");
+  }
 }

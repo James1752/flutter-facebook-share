@@ -8,6 +8,7 @@
 import Flutter
 import FBSDKCoreKit
 import Foundation
+import FBSDKShareKit
 
 class FacebookShare: NSObject {
     /*
@@ -20,7 +21,17 @@ class FacebookShare: NSObject {
         case "isFacebookInstalled":
             let installed = self.checkIfFacebookAppInstalled();
             result(installed)
-            
+
+        case "shareFaceBook":
+            let content = getLinkSharingContent(url: "https://www.google.com.au", quote: "Hello World!")
+            let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
+
+            guard shareDialog.canShow else {
+                print("Facebook Messenger must be installed in order to share to it")
+                return
+            }
+            shareDialog.show()
+
         default:
             result(FlutterMethodNotImplemented)
         }
