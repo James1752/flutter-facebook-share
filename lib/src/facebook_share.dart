@@ -16,11 +16,24 @@ class FacebookShare {
     return false;
   }
 
-  Future<void> get shareFaceBookLink async {
-    await _channel.invokeMethod("shareFaceBookLink");
+  Future<FacebookShareResult> get shareFaceBookLink async {
+    final result = await _channel.invokeMethod("shareFaceBookLink");
+    if (result != null) {
+      return FacebookShareResult(result["error"], result["message"]);
+    }
   }
 
-  Future<void> get shareFaceBookImage async {
-    await _channel.invokeMethod("shareFaceBookImage");
+  Future<FacebookShareResult> get shareFaceBookImage async {
+    final result = await _channel.invokeMethod("shareFaceBookImage");
+    if (result != null) {
+      return FacebookShareResult(result["error"], result["message"]);
+    }
   }
+}
+
+class FacebookShareResult {
+  final bool error;
+  final String message;
+
+  FacebookShareResult(this.error, this.message);
 }
