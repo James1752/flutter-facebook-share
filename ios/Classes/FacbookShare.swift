@@ -34,7 +34,7 @@ class FacebookShare: NSObject {
             }
             shareDialog.show()
         case "shareFaceBookImage":
-            let content = getPhotoSharingContent()
+            let content = getPhotoSharingContent(imageUrl: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg", quote: "Hello World")
             let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
 
             guard shareDialog.canShow else {
@@ -47,18 +47,17 @@ class FacebookShare: NSObject {
         }
     }
 
-    private func getPhotoSharingContent() -> SharingContent {
-        let url = URL(string: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg")!
-        let data = try? Data(contentsOf: url) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+    private func getPhotoSharingContent(imageUrl:String, quote:String ) -> SharingContent {
+        let url = URL(string: imageUrl)!
+        let data = try? Data(contentsOf: url)
 
         let image = UIImage(data: data!)!
         let photo = SharePhoto(image: image, userGenerated: true)
 
         let photoContent = SharePhotoContent()
         photoContent.photos = [photo]
-        
-    // Optional:
-        // photoContent.hashtag = Hashtag("#fooHashTag")
+        photoContent.quote = quote
+        photoContent.hashtag = Hashtag("#yodel_it")
     
         return photoContent
     }
@@ -67,7 +66,7 @@ class FacebookShare: NSObject {
         let shareLinkContent = ShareLinkContent()
         shareLinkContent.contentURL = URL(string: url)!
         shareLinkContent.quote = quote
-        
+        shareLinkContent.hashtag = Hashtag("#yodel_it")
         return shareLinkContent
     }
     
