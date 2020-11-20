@@ -21,6 +21,7 @@ class FacebookShare {
     if (result != null) {
       return FacebookShareResult(result["error"], result["message"]);
     }
+    return FacebookShareResult(true, "Unknown error occured");
   }
 
   Future<FacebookShareResult> get shareFaceBookImage async {
@@ -28,6 +29,7 @@ class FacebookShare {
     if (result != null) {
       return FacebookShareResult(result["error"], result["message"]);
     }
+    return FacebookShareResult(true, "Unknown error occured");
   }
 }
 

@@ -1,19 +1,13 @@
-//
-//  FacebookAuth.swift
-//  FBSDKCoreKit
-//
-//  Created by Darwin Morocho on 11/10/20.
-//
-
 import Flutter
 import FBSDKCoreKit
 import Foundation
 import FBSDKShareKit
 import UIKit
+
 enum FacebookShareError: Error {
     case invalidUrl(message: String)
-    case insufficientFunds(coinsNeeded: Int)
 }
+
 class FacebookShare: NSObject {
     let controller:UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!;
     /*
@@ -30,7 +24,7 @@ class FacebookShare: NSObject {
         case "shareFaceBookLink":
 
             do {
-                let content = try getLinkSharingContent(url: "htps://www.google.com.au", quote: "Hello World!",hashTag: "")
+                let content = try getLinkSharingContent(url: "htps://www.google.com.au", imageUrl: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png", quote: "Hello World!",hashTag: "")
                 let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
 
                 guard shareDialog.canShow else {
@@ -75,6 +69,9 @@ class FacebookShare: NSObject {
 
     private func getPhotoSharingContent(imageUrl:String, hashTag:String ) throws -> SharingContent {
         do {
+            if !verifyUrl(urlString: imageUrl){
+                throw FacebookShareError.invalidUrl(message: "Invalid Url")    
+            }
             let url = URL(string: imageUrl)!
             let data = try? Data(contentsOf: url)
             if data == nil {
@@ -94,13 +91,17 @@ class FacebookShare: NSObject {
         }
     }
 
-    private func getLinkSharingContent(url:String, quote:String, hashTag:String ) throws -> SharingContent {
+    private func getLinkSharingContent(url:String, imageURL:String, quote:String, hashTag:String ) throws -> SharingContent {
         do {
             if !verifyUrl(urlString: url){
                 throw FacebookShareError.invalidUrl(message: "Invalid Url")    
             }
+            if !verifyUrl(urlString: imageURL){
+                throw FacebookShareError.invalidUrl(message: "Invalid Url")    
+            }
             let shareLinkContent = ShareLinkContent()
             shareLinkContent.contentURL = URL(string: url)!
+            shareLinkContent.imageURL = URL(string: imageURL)!
             shareLinkContent.quote = quote
             if  !hashTag.isEmpty {
                 shareLinkContent.hashtag = Hashtag(hashTag)
@@ -120,12 +121,12 @@ class FacebookShare: NSObject {
         return false
     }
 
-    func checkIfFacebookAppInstalled() -> Bool {
+    private func checkIfFacebookAppInstalled() -> Bool {
         let facebookAppUrl = URL(string: "fb://")!
         return UIApplication.shared.canOpenURL(facebookAppUrl)
     }      
 
-    func checkIfFacebookMessengerAppInstalled() -> Bool {
+    private func checkIfFacebookMessengerAppInstalled() -> Bool {
         let facebookMessengerAppUrl = URL(string: "fb-messenger://")!
         return UIApplication.shared.canOpenURL(facebookMessengerAppUrl)
     }
