@@ -49,7 +49,7 @@ class FacebookShare: NSObject {
 
     private func getPhotoSharingContent() -> SharingContent {
         let url = URL(string: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg")!
-        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+        let data = try? Data(contentsOf: url) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
 
         let image = UIImage(data: data!)!
         let photo = SharePhoto(image: image, userGenerated: true)
