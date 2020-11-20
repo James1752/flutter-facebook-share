@@ -16,7 +16,7 @@ public class SwiftFlutterFacebookSharePlugin: NSObject, FlutterPlugin {
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        self.facebookShare.handle(call, result: result, , viewController: self.controller)
+        self.facebookShare.handle(call, result: result, viewController: self.controller)
     }
 
     
