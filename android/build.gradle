@@ -1,4 +1,4 @@
-group 'app.meedu.flutter_facebook_auth'
+group 'co.yodelit.facebook_share'
 version '1.0'
 
 buildscript {
