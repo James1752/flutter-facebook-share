@@ -7,7 +7,6 @@
 
 import Flutter
 import FBSDKCoreKit
-import FBSDKLoginKit
 import Foundation
 
 class FacebookShare: NSObject {
