@@ -30,7 +30,7 @@ class FacebookShare: NSObject {
 
         case "shareFaceBook":
             let content = getLinkSharingContent(url: "https://www.google.com.au", quote: "Hello World!")
-            let shareDialog = ShareDialog(fromViewController: viewController, content: content, delegate: nil)
+            let shareDialog = ShareDialog(fromViewController: self.viewController, content: content, delegate: nil)
 
             guard shareDialog.canShow else {
                 print("Facebook Messenger must be installed in order to share to it")
@@ -41,6 +41,14 @@ class FacebookShare: NSObject {
         default:
             result(FlutterMethodNotImplemented)
         }
+    }
+
+    private func getLinkSharingContent(url:String, quote:String ) -> SharingContent {
+        let shareLinkContent = ShareLinkContent()
+        shareLinkContent.contentURL = URL(string: url)!
+        shareLinkContent.quote = quote
+        
+        return shareLinkContent
     }
     
     func checkIfFacebookAppInstalled() -> Bool {
