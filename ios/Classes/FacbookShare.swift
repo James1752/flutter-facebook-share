@@ -25,7 +25,7 @@ class FacebookShare: NSObject {
             result(installed)
 
         case "shareFaceBookLink":
-            let content = getLinkSharingContent(url: "https://www.google.com.au", quote: "Hello World!")
+            let content = getLinkSharingContent(hashTag: nil, url: "https://www.google.com.au", quote: "Hello World!")
             let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
 
             guard shareDialog.canShow else {
@@ -34,7 +34,7 @@ class FacebookShare: NSObject {
             }
             shareDialog.show()
         case "shareFaceBookImage":
-            let content = getPhotoSharingContent(imageUrl: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg", quote: "Hello World")
+            let content = getPhotoSharingContent(hashTag: nil, imageUrl: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg")
             let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
 
             guard shareDialog.canShow else {
@@ -47,7 +47,7 @@ class FacebookShare: NSObject {
         }
     }
 
-    private func getPhotoSharingContent(imageUrl:String, quote:String ) -> SharingContent {
+    private func getPhotoSharingContent(imageUrl:String, hashTag:String ) -> SharingContent {
         let url = URL(string: imageUrl)!
         let data = try? Data(contentsOf: url)
 
@@ -56,17 +56,19 @@ class FacebookShare: NSObject {
 
         let photoContent = SharePhotoContent()
         photoContent.photos = [photo]
-        photoContent.quote = quote
-        photoContent.hashtag = Hashtag("#yodel_it")
-    
+        if hashTag {
+            photoContent.hashtag = Hashtag(hashTag)
+        }
         return photoContent
     }
 
-    private func getLinkSharingContent(url:String, quote:String ) -> SharingContent {
+    private func getLinkSharingContent(url:String, quote:String, hashTag:String ) -> SharingContent {
         let shareLinkContent = ShareLinkContent()
         shareLinkContent.contentURL = URL(string: url)!
         shareLinkContent.quote = quote
-        shareLinkContent.hashtag = Hashtag("#yodel_it")
+        if hashTag {
+            shareLinkContent.hashtag = Hashtag(hashTag)
+        }
         return shareLinkContent
     }
     
