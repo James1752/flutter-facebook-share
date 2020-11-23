@@ -26,6 +26,8 @@ class FacebookShare: NSObject {
                 let url = args?["url"] as? String
                 let quote = args?["quote"] as? String
                 let hashTag = args?["hashTag"] as? String
+                print(url??"notjing here")
+                print(quote??"notjing here")
                 if !(url ?? "").isEmpty || !(quote ?? "").isEmpty{
                     result(["error": true, "message": "Parameters are invalid"])
                     return
