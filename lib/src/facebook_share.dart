@@ -17,10 +17,11 @@ class FacebookShare {
   }
 
   Future<FacebookShareResult> shareFaceBookLink(
-      String url, String quote) async {
+      String url, String quote, String hashTag) async {
     var data = Map<String, dynamic>();
     data.putIfAbsent("url", () => url);
-    data.putIfAbsent("url", () => quote);
+    data.putIfAbsent("quote", () => quote);
+    data.putIfAbsent("hashTag", () => hashTag);
     final result = await _channel.invokeMethod("shareFaceBookLink", data);
     if (result != null) {
       return FacebookShareResult(result["error"], result["message"]);
