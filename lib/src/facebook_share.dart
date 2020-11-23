@@ -23,6 +23,7 @@ class FacebookShare {
     data.putIfAbsent("quote", () => quote);
     if (hashTag != null) data.putIfAbsent("hashTag", () => hashTag);
     final result = await _channel.invokeMethod("shareFaceBookLink", data);
+    print(data);
     if (result != null) {
       return FacebookShareResult(result["error"], result["message"]);
     }
