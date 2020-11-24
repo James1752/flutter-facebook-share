@@ -23,14 +23,10 @@ public class FacebookShare {
 
     void isFacebookInstalled(Activity activity, MethodChannel.Result result) {
         final boolean isFbInstalled = isPackageInstalled(activity, "com.facebook.katana");
-       if(isFbInstalled){
-           result.success(null);
-           return;
-       }
-       result.error("FAILED", "Facebook Messenger must be installed in order to share to it", null);
+           result.success(isFbInstalled);
     }
 
-    public static boolean isPackageInstalled(Activity c, String targetPackage) {
+    private static boolean isPackageInstalled(Activity c, String targetPackage) {
         PackageManager pm = c.getPackageManager();
         try {
             PackageInfo info = pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA);
