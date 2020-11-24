@@ -23,6 +23,8 @@ public class FacebookShare {
 
     void isFacebookInstalled(Activity activity, MethodChannel.Result result) {
         final boolean isFbInstalled = isPackageInstalled(activity, "com.facebook.katana");
+        Log.d("myTag", "This is my message");
+        Log.d("myTag", isFbInstalled);
            result.success(isFbInstalled);
     }
 
