@@ -14,6 +14,8 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
+import androidx.annotation.NonNull;
+
 
 public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
 
@@ -31,12 +33,6 @@ public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHand
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL_NAME);
         channel.setMethodCallHandler(this);
-    }
-
-    @Override
-    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
-        // Use the GeneratedPluginRegistrant to add every plugin that's in the pubspec.
-        GeneratedPluginRegistrant.registerWith(new ShimPluginRegistry(flutterEngine));
     }
 
     @Override
@@ -60,38 +56,7 @@ public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHand
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        channel.setMethodCallHandler(null);
-    }
-
-    @Override
-    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        this.attachToActivity(binding);
-    }
-
-    @Override
-    public void onDetachedFromActivityForConfigChanges() {
-        disposeActivity();
-    }
-
-    @Override
-    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
-        this.attachToActivity(binding);
-    }
-
-    @Override
-    public void onDetachedFromActivity() {
-        disposeActivity();
-    }
-
-
-    private void attachToActivity(ActivityPluginBinding binding) {
-        this.activityPluginBinding = binding;
-        activityPluginBinding.addActivityResultListener(facebookAuth.resultDelegate);
-    }
-
-    private void disposeActivity() {
-        activityPluginBinding.removeActivityResultListener(facebookAuth.resultDelegate);
-        activityPluginBinding = null;
+      channel.setMethodCallHandler(null);
     }
 
 }
