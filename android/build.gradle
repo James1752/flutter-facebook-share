@@ -35,6 +35,5 @@ android {
 
 
 dependencies {
-    implementation 'com.facebook.android:facebook-core:[8,9)'
-    implementation 'com.facebook.android:facebook-share:[8,9)'
+    compile 'com.facebook.android:facebook-share:5.+'
 }
