@@ -14,14 +14,9 @@ import io.flutter.plugin.common.MethodChannel;
 
 
 public class FacebookShare {
-    private LoginManager loginManager;
-    FacebookLoginResultDelegate resultDelegate;
 
  FacebookShare() {
-        loginManager = LoginManager.getInstance();
         CallbackManager callbackManager = CallbackManager.Factory.create();
-        resultDelegate = new FacebookLoginResultDelegate(callbackManager);
-        loginManager.registerCallback(callbackManager, resultDelegate);
     }
 
     void isFacebookInstalled(Activity activity, MethodChannel.Result result) {
