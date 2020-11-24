@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
