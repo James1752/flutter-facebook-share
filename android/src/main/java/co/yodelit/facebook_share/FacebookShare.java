@@ -25,7 +25,7 @@ public class FacebookShare {
         final boolean isFbInstalled = isPackageInstalled(activity, "com.facebook.katana");
         HashMap<String, Object> data = new HashMap<String, Object>();
         data.put("", isFbInstalled);
-
+        System.out.println("Console is: "+ isFbInstalled);
 
         result.success(data);
     }
