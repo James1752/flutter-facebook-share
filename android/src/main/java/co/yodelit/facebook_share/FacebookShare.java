@@ -3,7 +3,7 @@ package co.yodelit.facebook_share;
 import android.app.Activity;
 import android.os.Bundle;
 
-
+import android.content.pm.PackageManager;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import io.flutter.plugin.common.MethodChannel;
 public class FacebookShare {
 
  FacebookShare() {
-        CallbackManager callbackManager = CallbackManager.Factory.create();
+
     }
 
     void isFacebookInstalled(Activity activity, MethodChannel.Result result) {
