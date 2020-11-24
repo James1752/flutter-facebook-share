@@ -1,7 +1,6 @@
 name: social_share
-description: Flutter plugin to make easy the facebook authentication in your flutter app.
+description: Flutter plugin to share link to facebook.
 version: 1.0.1
-homepage: https://github.com/darwin-morocho/flutter-facebook-auth
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

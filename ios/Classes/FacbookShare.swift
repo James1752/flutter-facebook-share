@@ -9,6 +9,7 @@ enum FacebookShareError: Error {
 }
 
 class FacebookShare: NSObject {
+    let shareDelegater =  ShareDelegater()
     let controller:UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!;
     /*
      handle the platform channel
@@ -30,73 +31,26 @@ class FacebookShare: NSObject {
                     result(["error": true, "message": "Parameters are invalid"])
                     return
                 }
+                shareDelegater.setResult(res: result)
                 let content = try getLinkSharingContent(url: url ?? "", quote: quote ?? "", hashTag: hashTag ?? "")
-                let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate: nil)
+                let shareDialog = ShareDialog(fromViewController: controller, content: content, delegate:  shareDelegater)
 
                 guard shareDialog.canShow else {
                     result(["error": true, "message": "Facebook Messenger must be installed in order to share to it"])
                     return
                 }
                 shareDialog.show()
-            }            
-            catch FacebookShareError.invalidUrl(let message) {
-                result(["error": true, "message": message])
-                return
+                
             }
             catch {
-                result(["error": true, "message": "Unexpected error has occured"])
+                result(["error": true, "message": "Unexpected error has occured, please try again later"])
                 return  
             }
-            
-        case "shareFaceBookImage":
-            do {
-                let content = try getPhotoSharingContent(imageUrl: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper", hashTag: "" )
-                let shareDialog = ShareDialog(fromViewController: controller, content: content as! SharingContent, delegate: nil)
-
-                guard shareDialog.canShow else {
-                    result(["error": true, "message": "Facebook Messenger must be installed in order to share to it"])
-                    return
-                }
-                shareDialog.show()
-            }
-            catch FacebookShareError.invalidUrl(let message) {
-                result(["error": true, "message": message])
-                return
-            }
-            catch {
-                result(["error": true, "message": "Unexpected error has occured"])
-                return  
-            }
-
         default:
             result(FlutterMethodNotImplemented)
         }
     }
-
-    private func getPhotoSharingContent(imageUrl:String, hashTag:String ) throws -> SharingContent {
-        do {
-            if !verifyUrl(urlString: imageUrl){
-                throw FacebookShareError.invalidUrl(message: "Invalid Url")    
-            }
-            let url = URL(string: imageUrl)!
-            let data = try? Data(contentsOf: url)
-            if data == nil {
-                throw FacebookShareError.invalidUrl(message: "Invalid Url")
-            }
-            let image = UIImage(data: data!)!
-            let photo = SharePhoto(image: image, userGenerated: true)
-
-            let photoContent = SharePhotoContent()
-            photoContent.photos = [photo]
-            if !hashTag.isEmpty {
-                photoContent.hashtag = Hashtag(hashTag)
-            }
-        return photoContent
-        } catch {
-            throw FacebookShareError.invalidUrl(message: "Invalid Url")
-        }
-    }
-
+    
     private func getLinkSharingContent(url:String, quote:String, hashTag:String ) throws -> SharingContent {
         do {
             if !verifyUrl(urlString: url){
@@ -135,3 +89,27 @@ class FacebookShare: NSObject {
 
 }
 
+class ShareDelegater: NSObject, SharingDelegate{
+    var res: FlutterResult?
+    
+    func setResult(res: @escaping FlutterResult){
+        self.res = res
+    }
+    
+    func sharer(_ sharer: Sharing, didCompleteWithResults results: [String : Any]) {
+        if res != nil {
+            self.res!(["error": false, "message": "Successful Post"])
+        }
+    }
+
+    func sharer(_ sharer: Sharing, didFailWithError error: Error) {
+      print("didFailWithError: \(error.localizedDescription)")
+    }
+
+    func sharerDidCancel(_ sharer: Sharing) {
+        if res != nil {
+            self.res!(["error": true, "message": "User cancelled sharing"])
+        }
+
+    }
+}
