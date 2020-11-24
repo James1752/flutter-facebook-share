@@ -82,11 +82,9 @@ public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHand
 
     private void attachToActivity(ActivityPluginBinding binding) {
         this.activityPluginBinding = binding;
-        activityPluginBinding.addActivityResultListener(facebookAuth.resultDelegate);
     }
 
     private void disposeActivity() {
-        activityPluginBinding.removeActivityResultListener(facebookAuth.resultDelegate);
         activityPluginBinding = null;
     }
 
