@@ -56,7 +56,38 @@ public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHand
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-      channel.setMethodCallHandler(null);
+        channel.setMethodCallHandler(null);
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        this.attachToActivity(binding);
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+        disposeActivity();
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        this.attachToActivity(binding);
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+        disposeActivity();
+    }
+
+
+    private void attachToActivity(ActivityPluginBinding binding) {
+        this.activityPluginBinding = binding;
+        activityPluginBinding.addActivityResultListener(facebookAuth.resultDelegate);
+    }
+
+    private void disposeActivity() {
+        activityPluginBinding.removeActivityResultListener(facebookAuth.resultDelegate);
+        activityPluginBinding = null;
     }
 
 }
