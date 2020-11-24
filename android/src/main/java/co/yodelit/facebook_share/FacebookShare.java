@@ -19,31 +19,37 @@ import java.util.List;
 import io.flutter.plugin.common.MethodChannel;
 
 
-public class FacebookAuth {
+public class FacebookShare {
     private LoginManager loginManager;
     FacebookLoginResultDelegate resultDelegate;
 
-    FacebookAuth() {
+ FacebookShare() {
         loginManager = LoginManager.getInstance();
         CallbackManager callbackManager = CallbackManager.Factory.create();
         resultDelegate = new FacebookLoginResultDelegate(callbackManager);
         loginManager.registerCallback(callbackManager, resultDelegate);
     }
 
-
-    /**
-     * makes an login request using the facebook sdk
-     *
-     * @param activity    the android activity to handle onActivityResult event
-     * @param permissions list of permissions
-     * @param result      flutter method channel result to send the response to the client
-     */
-    void login(Activity activity, List<String> permissions, MethodChannel.Result result) {
-        final boolean isOk = resultDelegate.setPendingResult(result);
-        if (isOk) {
-            loginManager.logIn(activity, permissions);
-        }
+    void isFacebookInstalled(Activity activity, MethodChannel.Result result) {
+        final boolean isFbInstalled = isPackageInstalled(activity, "com.facebook.katana");
+       if(isFbInstalled){
+           result.success(null);
+           return;
+       }
+       result.error("FAILED", "Facebook Messenger must be installed in order to share to it", null);
     }
+
+    public static boolean isPackageInstalled(Context c, String targetPackage) {
+        PackageManager pm = c.getPackageManager();
+        try {
+            PackageInfo info = pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA);
+        } catch (NameNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
+
+
 
     /**
      * Check Login Status

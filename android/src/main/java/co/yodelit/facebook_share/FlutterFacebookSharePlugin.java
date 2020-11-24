@@ -13,13 +13,11 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-/**
- * FlutterFacebookAuthPlugin
- */
+
 public class FlutterFacebookAuthPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
 
-    private static final String CHANNEL_NAME = "app.meedu/flutter_facebook_auth";
-    private FacebookAuth facebookAuth = new FacebookAuth();
+    private static final String CHANNEL_NAME = "co.yodelit.yodel/fb";
+    private FacebookShare facebookShare = new FacebookShare();
     private ActivityPluginBinding activityPluginBinding;
 
     /// The MethodChannel that will the communication between Flutter and native Android
@@ -43,25 +41,15 @@ public class FlutterFacebookAuthPlugin implements FlutterPlugin, MethodCallHandl
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
-            case "login":
-                List<String> permissions = call.argument("permissions");
-                facebookAuth.login(this.activityPluginBinding.getActivity(), permissions, result);
+            case "isFacebookInstalled":
+            facebookShare.isFacebookInstalled(this.activityPluginBinding.getActivity(), result);
                 break;
-            case "expressLogin":
-                facebookAuth.expressLogin(this.activityPluginBinding.getActivity(), result);
-                break;
-
-            case "isLogged":
-                facebookAuth.isLogged(result);
+            case "shareFaceBookLink":
+              
                 break;
 
-            case "getUserData":
-                String fields = call.argument("fields");
-                facebookAuth.getUserData(fields, result);
-                break;
-
-            case "logOut":
-                facebookAuth.logOut(result);
+            case "shareFaceBookImage":
+              
                 break;
 
             default:
