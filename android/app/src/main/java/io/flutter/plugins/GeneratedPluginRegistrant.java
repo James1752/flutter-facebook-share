@@ -1,7 +1,7 @@
 package io.flutter.plugins;
 
 import io.flutter.plugin.common.PluginRegistry;
-import co.yodelit.facebook_share.FlutterFacebookAuthPlugin;
+import co.yodelit.facebook_share.FlutterFacebookSharePlugin;
 
 /**
  * Generated file. Do not edit.
@@ -11,7 +11,7 @@ public final class GeneratedPluginRegistrant {
     if (alreadyRegisteredWith(registry)) {
       return;
     }
-    FlutterFacebookAuthPlugin.registerWith(registry.registrarFor("co.yodelit.facebook_share.FlutterFacebookAuthPlugin"));
+    FlutterFacebookSharePlugin.registerWith(registry.registrarFor("co.yodelit.facebook_share.FlutterFacebookSharePlugin"));
   }
 
   private static boolean alreadyRegisteredWith(PluginRegistry registry) {
