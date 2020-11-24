@@ -28,7 +28,7 @@ public class FacebookShare {
        result.error("FAILED", "Facebook Messenger must be installed in order to share to it", null);
     }
 
-    public static boolean isPackageInstalled(Context c, String targetPackage) {
+    public static boolean isPackageInstalled(Activity c, String targetPackage) {
         PackageManager pm = c.getPackageManager();
         try {
             PackageInfo info = pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA);

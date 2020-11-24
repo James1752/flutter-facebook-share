@@ -14,7 +14,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 
-public class FlutterFacebookAuthPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
+public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private static final String CHANNEL_NAME = "co.yodelit.yodel/fb";
     private FacebookShare facebookShare = new FacebookShare();
