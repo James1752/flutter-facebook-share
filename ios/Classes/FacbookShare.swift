@@ -103,7 +103,6 @@ class ShareDelegater: NSObject, SharingDelegate{
     }
 
     func sharer(_ sharer: Sharing, didFailWithError error: Error) {
-      print("didFailWithError: \(error.localizedDescription)")
     }
 
     func sharerDidCancel(_ sharer: Sharing) {
