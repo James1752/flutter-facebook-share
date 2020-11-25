@@ -1,8 +1,11 @@
 package co.yodelit.facebook_share;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
+
+import com.facebook.CallbackManager;
 
 import java.util.Map;
 
@@ -15,9 +18,10 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 
-public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
+public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
     private static final String CHANNEL_NAME = "co.yodelit.yodel/fb";
     private final FacebookShare facebookShare = new FacebookShare();
+    private CallbackManager callbackManager;
     private Activity activity;
 
     private MethodChannel channel;
@@ -26,6 +30,8 @@ public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHand
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL_NAME);
         channel.setMethodCallHandler(this);
+        this.callbackManager = CallbackManager.Factory.create();
+        ;
     }
 
     @Override
@@ -47,7 +53,8 @@ public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHand
                 String url = (String) args.get("url");
                 String quote = (String) args.get("quote");
                 String hashTag = (String) args.get("hashTag");
-                facebookShare.shareLinkFacebook(url, quote, hashTag, result, activity);
+                ShareLinkData data = new ShareLinkData(url, quote, hashTag);
+                facebookShare.shareLinkFacebook(data, result, activity, callbackManager);
                 break;
             default:
                 result.notImplemented();
@@ -58,6 +65,7 @@ public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHand
     @Override
     public void onAttachedToActivity(ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        binding.addActivityResultListener(this);
     }
 
     @Override
@@ -68,10 +76,17 @@ public class FlutterFacebookSharePlugin implements FlutterPlugin, MethodCallHand
     @Override
     public void onReattachedToActivityForConfigChanges(ActivityPluginBinding binding) {
         activity = binding.getActivity();
+        binding.removeActivityResultListener(this);
+        binding.addActivityResultListener(this);
     }
 
     @Override
     public void onDetachedFromActivity() {
 
+    }
+
+    @Override
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        return callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
