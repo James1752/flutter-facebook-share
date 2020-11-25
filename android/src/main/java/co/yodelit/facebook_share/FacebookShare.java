@@ -46,7 +46,7 @@ public class FacebookShare {
 
             @Override
             public void onCancel() {
-                replyResult(true, "User cancelled sharing", res);
+                replyResult(true, "Sharing Cancelled", res);
             }
 
             @Override

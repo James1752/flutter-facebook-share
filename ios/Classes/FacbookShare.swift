@@ -107,7 +107,7 @@ class ShareDelegater: NSObject, SharingDelegate{
 
     func sharerDidCancel(_ sharer: Sharing) {
         if res != nil {
-            self.res!(["error": true, "message": "User cancelled sharing"])
+            self.res!(["error": true, "message": "Sharing Cancelled"])
         }
 
     }
