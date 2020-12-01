@@ -23,9 +23,7 @@ class FacebookShare {
     data.putIfAbsent("quote", () => quote);
     if (hashTag != null) data.putIfAbsent("hashTag", () => hashTag);
     final result = await _channel.invokeMethod("shareFaceBookLink", data);
-    data.forEach((key, value) {
-      print("KEY: $key      VALUE: $value");
-    });
+
     if (result != null) {
       return FacebookShareResult(result["error"], result["message"]);
     }
